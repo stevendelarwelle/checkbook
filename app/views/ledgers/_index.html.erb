@@ -1,0 +1,17 @@
+<% @ledgers.each do |ledger| %>
+      <tr>
+        <td><%= ledger.description %></td>
+        <td><%= ledger.amount %></td>
+        <td>
+          <% if ledger.cleared %>  
+         
+          <i class="fa fa-check-circle"></i>
+          <% else %>
+          <%= link_to 'Cleared?',cleared_ledger_path(ledger, cleared: "true"),method: :put %>
+          <% end %>
+        </td>
+        <td><%= link_to "<i class='fa fa-eye'></i>".html_safe, ledger %></td>
+        <td><%= link_to "<i class='fa fa-pencil-square-o'></i>".html_safe, edit_ledger_path(ledger) %></td>
+        <td><%= link_to "<i class='fa fa-trash-o'></i>".html_safe, ledger,  method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>

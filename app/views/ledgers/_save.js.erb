@@ -1,0 +1,13 @@
+$("ul.errors").html("");
+<% if @ledger.errors.any? %>
+<% @ledger.errors.full_messages.each do |message| %>
+    $("ul.errors").append($("<li />").html("<%= message.html_safe %>"));
+ 
+  <% end %>
+<% else %>
+
+$(".ledger-index").html("<%= j (render 'index' ) %>");
+$(".ledger-summary").html("<%= j (render 'summary')%>");
+ $("#ledger-modal").modal("hide"); 
+
+<% end %>

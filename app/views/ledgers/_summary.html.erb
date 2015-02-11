@@ -1,0 +1,15 @@
+
+  <h3><span class="label label-primary">Total:
+    <%= @ledgers.sum('amount') %>
+    </span>
+  </h3>
+
+  <h3> <span class="label label-success">Cleared: 
+    <%= @ledgers.where("cleared = 't'").sum('amount') %>
+    </span>
+  </h3>
+
+  <h3> <span class="label label-danger">Diff: 
+    <%= (@ledgers.where("cleared = 't'").sum('amount')) - (@ledgers.sum('amount')) %>
+  </span>
+  </h3>
