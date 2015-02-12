@@ -24,7 +24,9 @@ class LedgersController < ApplicationController
 
   def index
     @ledgers = current_user.ledgers.all.order(id: :desc)
-   
+    @ledgerscash=@ledgers.sum('amount')
+    @ledgersbank=@ledgers.where("cleared = 't'").sum('amount')
+    @ledgersdiff=@ledgers.sum('amount')- @ledgers.where("cleared = 't'").sum('amount')
     respond_with(@ledgers)
   end
 
@@ -42,13 +44,27 @@ class LedgersController < ApplicationController
 
   def create
     @ledgers = current_user.ledgers.all.order(id: :desc)
+    
     @ledger = current_user.ledgers.new(ledger_params)
     @ledger.save
+    
+    @ledgerscash=@ledgers.sum('amount')
+    @ledgersbank=@ledgers.where("cleared = 't'").sum('amount')
+    @ledgersdiff=@ledgers.sum('amount') -@ledgers.where("cleared = 't'").sum('amount') 
+    
+    
     respond_with(@ledger)
   end
 
   def update
+    
     @ledger.update(ledger_params)
+    @ledgers = current_user.ledgers.all.order(id: :desc)
+    @ledgerscash=@ledgers.sum('amount')
+    @ledgersbank=@ledgers.where("cleared = 't'").sum('amount')
+    @ledgersdiff=@ledgers.sum('amount') -@ledgers.where("cleared = 't'").sum('amount') 
+    
+    
     respond_with(@ledger)
   end
 
